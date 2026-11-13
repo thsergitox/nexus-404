@@ -7,10 +7,14 @@ Implementación funcional local y revisión independiente. **No se han ejecutado
 - `python3 -m unittest discover -v`: **42 pruebas correctas**, incluyendo un recorrido parametrizado de los **100 casos conversacionales** en contingencia y **23 comprobaciones operativas de servidor**. Usa carpetas temporales, reloj controlado y proveedores simulados; no utiliza transcripciones de estudiantes.
 - `node --test tests/browser-races.mjs`: **6 pruebas correctas** sobre los módulos reales de ambas vistas, con respuestas diferidas. Node solo se necesita para esta comprobación de desarrollo, no para ejecutar la estación.
 - Sintaxis JavaScript comprobada con `node --check`.
-- Navegador Chromium/Playwright: arranque detenido, inicio privado, clave ausente con pausa, paso a contingencia/reanudación, petición de ayuda y H1 individual, mantenimiento, recarga, reporte, registro persistente, diez filas binarias, tabla con teclado, formato de cinco dígitos, código incorrecto, victoria y reloj detenido, reinicio confirmado y tiempo agotado.
+- Navegador Chromium/Playwright: arranque detenido, inicio privado, clave ausente con pausa, paso a contingencia/reanudación, petición de ayuda y H1 individual, mantenimiento, recarga, reporte, registro persistente, diez filas binarias, tabla con teclado y retorno al chat, formato de cinco dígitos, código incorrecto, victoria y reloj detenido, reinicio confirmado y tiempo agotado.
 - Viewports **1440×900, 1366×768 y 390×844** sin desplazamiento horizontal. Chat y barra lateral tienen desplazamiento propio en laptop. La laptop física del evento sigue pendiente de comprobar.
 - Estados de espera y fallo visualizados mediante retraso de red controlado y ausencia de clave. Agotamiento visualizado con reloj de prueba. Estas simulaciones no se presentan como respuestas de OpenAI.
 - Recursos HTTP públicos inspeccionados: sin clave, contraseña del facilitador, código final ni bloques precargados. Rutas de `.env`, servidor, pruebas y datos denegadas. Los materiales y código fuente contienen lo necesario para organizar el reto, pero no se sirven al grupo.
+
+Los HTML imprimibles se visualizaron con estilos de impresión: cuatro notas y diez filas de equivalencias, dentro de la altura prevista para A4. La impresión física sigue pendiente.
+
+La revisión independiente cerró con disposición `ship` para el artefacto local y las correcciones examinadas; no acredita la operación del evento.
 
 Registro individual: [100 casos conversacionales](conversacion.csv) y [25 comprobaciones operativas](operacion.csv). “PASS_LOCAL” acredita solo la comprobación descrita, no un ensayo del modelo o del evento físico.
 
