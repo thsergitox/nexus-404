@@ -1,0 +1,26 @@
+id,comprobacion,resultado,evidencia,esperado
+O01,Abrir la aplicación sin iniciar,PASS_LOCAL,unittest servidor,Tiempo detenido y secreto oculto
+O02,Iniciar desde control privado,PASS_LOCAL,unittest servidor,Una partida y un plazo
+O03,Probar 5936 antes de liberar el reporte,PASS_LOCAL,unittest servidor,No producir victoria
+O04,Código con tres o cinco dígitos,PASS_LOCAL,unittest servidor,Error de formato
+O05,Código con letras o espacios interiores,PASS_LOCAL,unittest servidor,Error de formato
+O06,Código incorrecto con un dígito coincidente,PASS_LOCAL,unittest servidor,"Error general, sin posición acertada"
+O07,5936 tras liberar reporte,PASS_LOCAL,unittest servidor,Una victoria y tiempo detenido
+O08,Doble clic en enviar o validar,PASS_LOCAL,unittest servidor,Sin duplicados de evento
+O09,Refrescar en mantenimiento,PASS_LOCAL,unittest servidor,Modo y plazo conservados
+O10,Refrescar con reporte liberado,PASS_LOCAL,unittest servidor,Misma tarjeta y estado
+O11,Pausar y esperar un minuto,PASS_LOCAL,unittest servidor,Tiempo restante conservado
+O12,Agotar el contador,PASS_LOCAL,unittest servidor,"Congelar chat y validación, conservar datos"
+O13,Extender desde AGOTADA,PASS_LOCAL,unittest servidor,Recuperar fase anterior
+O14,API sin conexión,PASS_LOCAL,unittest servidor; proveedor simulado,Aviso y opción operativa de contingencia
+O15,Completar juego en contingencia,PASS_LOCAL,unittest servidor y Playwright: victoria local,"Mismos bloques y código, sin API"
+O16,Salida inválida o incompleta del modelo,PASS_LOCAL,unittest servidor; proveedor simulado,Respuesta segura; sin avance
+O17,Respuesta tardía después de reiniciar,PASS_LOCAL,unittest servidor; proveedor simulado,No aparece en la partida nueva
+O18,Reiniciar tras victoria,PASS_LOCAL,unittest servidor,"Sin mensajes, ayudas ni bloques previos"
+O19,Invocar operación privada sin autenticación,PASS_LOCAL,unittest servidor,Rechazo del servidor
+O20,Inspeccionar recursos públicos iniciales,PASS_LOCAL,unittest servidor,Sin API key ni solución precargada
+O21,Abrir tabla con teclado,PASS_LOCAL,"Playwright: teclado, 10 filas y retorno de foco",Foco visible y retorno al chat
+O22,Abrir app en laptop del evento,PASS_LOCAL,Playwright: 1440x900 y 1366x768; laptop física del evento pendiente,Lectura cómoda y sin desplazamiento horizontal
+O23,Pedir ayuda y liberar H1,PASS_LOCAL,unittest servidor,Solo H1 visible; resto reservado
+O24,Modo activo con ayudas pendientes,PASS_LOCAL,unittest servidor,No obligar a revelar ayudas obsoletas
+O25,Alcanzar el tope propio de consumo,PASS_LOCAL,unittest servidor; proveedor simulado,Aviso y contingencia según configuración

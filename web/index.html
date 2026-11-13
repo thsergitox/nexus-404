@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090f18"><title>NORA · NEXUS-404</title><link rel="icon" href="/mark.svg"><link rel="stylesheet" href="/styles/base.css"><link rel="stylesheet" href="/styles/player.css"><script type="module" src="/app.js"></script></head>
+<body>
+<a class="skip" href="#message">Ir al campo de conversación</a>
+<div class="station-shell">
+<header class="masthead">
+  <div class="identity"><img src="/mark.svg" width="42" height="42" alt=""><div><span class="brand">ACECOM</span><h1>NEXUS<span class="muted">–</span>404</h1></div></div>
+  <div class="connection"><span class="status-light"></span><span id="connection-label">Conectando con la estación</span></div>
+  <div class="timer"><span>Tiempo de la estación</span><strong id="clock" role="timer" aria-label="Tiempo restante">15:00</strong></div>
+</header>
+<div id="notice" class="notice" role="status" hidden></div>
+<main class="workspace">
+  <section class="chat-pane" aria-label="Conversación con NORA">
+    <div class="pane-heading"><div class="nora-avatar" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="13"/><path d="M9 20h22M20 7v26M12 12l16 16M28 12L12 28"/></svg></div><div><h2>NORA</h2><p>Computadora de navegación</p></div><span id="chat-state" class="small-label">En espera</span></div>
+    <div id="messages" class="messages" role="log" aria-label="Mensajes" aria-live="polite" aria-relevant="additions"></div>
+    <button id="new-messages" class="new-messages" hidden>Ver mensajes nuevos</button>
+    <div id="thinking" class="thinking" role="status" hidden><span></span>NORA está respondiendo…</div>
+    <form id="chat-form" class="composer">
+      <label for="message" class="sr-only">Mensaje para NORA</label>
+      <div class="input-row"><textarea id="message" rows="2" maxlength="800" placeholder="Escriban su solicitud a NORA…" aria-describedby="composer-help" disabled></textarea><button id="send" class="primary" type="submit" disabled>Enviar <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M10 4l6 6-6 6"/></svg></button></div>
+      <div class="composer-meta"><span id="composer-help">Enter para enviar · Shift + Enter para una nueva línea</span><span id="count">0 / 800</span></div>
+      <p id="chat-error" class="error-text" role="alert" hidden></p>
+    </form>
+  </section>
+  <aside class="sidebar" aria-label="Misión y recursos">
+    <section class="mission"><div class="section-heading"><h2>La misión</h2><span class="small-label">Nexus 150A</span></div>
+      <svg class="orbit" viewBox="0 0 300 110" role="img" aria-label="Ruta de navegación bloqueada"><ellipse cx="147" cy="56" rx="117" ry="32"/><ellipse cx="147" cy="56" rx="75" ry="21"/><path class="route" d="M33 74Q126 12 265 41"/><circle class="ship" cx="54" cy="63" r="5"/><circle class="destination" cx="263" cy="41" r="7"/><path class="cross" d="M142 43l14 14m0-14l-14 14"/></svg>
+      <h3>Recuperen la ruta de escape.</h3><p>Hablen con NORA, compartan lo que encuentren y prueben sus ideas.</p><div class="physical-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 12h7M9 16h5"/></svg><span>Hay notas físicas cerca de la consola. Búsquenlas en equipo.</span></div>
+    </section>
+    <section class="hint-panel"><div class="section-heading"><h2>Ayudas recibidas</h2><span id="hint-count" class="small-label">0</span></div><div id="hints"><p class="muted">Ninguna todavía. Pueden avanzar con sus propias ideas.</p></div><button id="help" class="secondary full" disabled>Solicitar ayuda</button><p id="help-status" class="muted small" role="status"></p></section>
+    <section class="record-panel"><div class="section-heading"><h2>Registro de navegación</h2><svg class="lock-icon" id="lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div><div id="locked-record"><p class="muted">Acceso restringido.</p><div class="sealed" aria-hidden="true"><span></span><span></span><span></span><span></span></div></div><div id="unlocked-record" hidden>
+      <p class="small muted">Registro recuperado</p><div id="binary-blocks" class="binary-blocks" aria-label="Cuatro bloques del registro"></div><p class="small">Cuatro bloques. Cuatro dígitos. El orden importa.</p>
+      <form id="code-form" class="code-form"><label for="code">Restaurar navegación</label><div class="input-row"><input id="code" type="text" inputmode="numeric" maxlength="32" autocomplete="off" placeholder="— — — —" aria-describedby="code-help"><button class="primary" type="submit">Validar</button></div><p id="code-help" class="small muted">Introduzcan el código de cuatro dígitos.</p><p id="code-error" class="error-text" role="alert" hidden></p></form>
+      <details id="binary-table"><summary>Consultar tabla binaria</summary><p class="small muted">Cada bloque representa un dígito.</p><table><caption class="sr-only">Equivalencias completas de cero a nueve</caption><thead><tr><th scope="col">Decimal</th><th scope="col">Binario</th></tr></thead><tbody id="table-rows"></tbody></table><button id="close-table" class="text-button" type="button">Cerrar tabla</button></details>
+    </div></section>
+  </aside>
+</main>
+<footer class="station-footer"><span><span class="tiny-dot"></span> Estación ACECOM</span><p>No escriban datos personales. La conversación conectada utiliza OpenAI.</p><span id="mode-label">Enlace de navegación</span></footer>
+</div>
+</body></html>

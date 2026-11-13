@@ -1,0 +1,280 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-13T06:47:42.756457+00:00",
+  "title": "Design System: NORA · NEXUS-404",
+  "extensions": {
+    "colorMeta": {
+      "bg": {
+        "role": "neutral",
+        "displayName": "bg",
+        "canonical": "#090f18",
+        "tonalRamp": [
+          "oklch(15.00% 0.02130 258.21)",
+          "oklch(26.43% 0.02130 258.21)",
+          "oklch(37.86% 0.02130 258.21)",
+          "oklch(49.29% 0.02130 258.21)",
+          "oklch(60.71% 0.02130 258.21)",
+          "oklch(72.14% 0.02130 258.21)",
+          "oklch(83.57% 0.02130 258.21)",
+          "oklch(95.00% 0.02130 258.21)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "surface",
+        "canonical": "#111c29",
+        "tonalRamp": [
+          "oklch(15.00% 0.03010 253.19)",
+          "oklch(26.43% 0.03010 253.19)",
+          "oklch(37.86% 0.03010 253.19)",
+          "oklch(49.29% 0.03010 253.19)",
+          "oklch(60.71% 0.03010 253.19)",
+          "oklch(72.14% 0.03010 253.19)",
+          "oklch(83.57% 0.03010 253.19)",
+          "oklch(95.00% 0.03010 253.19)"
+        ]
+      },
+      "raised": {
+        "role": "neutral",
+        "displayName": "raised",
+        "canonical": "#172536",
+        "tonalRamp": [
+          "oklch(15.00% 0.03754 253.86)",
+          "oklch(26.43% 0.03754 253.86)",
+          "oklch(37.86% 0.03754 253.86)",
+          "oklch(49.29% 0.03754 253.86)",
+          "oklch(60.71% 0.03754 253.86)",
+          "oklch(72.14% 0.03754 253.86)",
+          "oklch(83.57% 0.03754 253.86)",
+          "oklch(95.00% 0.03754 253.86)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "line",
+        "canonical": "#2b3b4d",
+        "tonalRamp": [
+          "oklch(15.00% 0.03800 251.85)",
+          "oklch(26.43% 0.03800 251.85)",
+          "oklch(37.86% 0.03800 251.85)",
+          "oklch(49.29% 0.03800 251.85)",
+          "oklch(60.71% 0.03800 251.85)",
+          "oklch(72.14% 0.03800 251.85)",
+          "oklch(83.57% 0.03800 251.85)",
+          "oklch(95.00% 0.03800 251.85)"
+        ]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "text",
+        "canonical": "#ecf2f5",
+        "tonalRamp": [
+          "oklch(15.00% 0.00758 228.85)",
+          "oklch(26.43% 0.00758 228.85)",
+          "oklch(37.86% 0.00758 228.85)",
+          "oklch(49.29% 0.00758 228.85)",
+          "oklch(60.71% 0.00758 228.85)",
+          "oklch(72.14% 0.00758 228.85)",
+          "oklch(83.57% 0.00758 228.85)",
+          "oklch(95.00% 0.00758 228.85)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "muted",
+        "canonical": "#a7b7c8",
+        "tonalRamp": [
+          "oklch(15.00% 0.03013 249.83)",
+          "oklch(26.43% 0.03013 249.83)",
+          "oklch(37.86% 0.03013 249.83)",
+          "oklch(49.29% 0.03013 249.83)",
+          "oklch(60.71% 0.03013 249.83)",
+          "oklch(72.14% 0.03013 249.83)",
+          "oklch(83.57% 0.03013 249.83)",
+          "oklch(95.00% 0.03013 249.83)"
+        ]
+      },
+      "lime": {
+        "role": "primary",
+        "displayName": "lime",
+        "canonical": "#d0ec8e",
+        "tonalRamp": [
+          "oklch(15.00% 0.12311 122.42)",
+          "oklch(26.43% 0.12311 122.42)",
+          "oklch(37.86% 0.12311 122.42)",
+          "oklch(49.29% 0.12311 122.42)",
+          "oklch(60.71% 0.12311 122.42)",
+          "oklch(72.14% 0.12311 122.42)",
+          "oklch(83.57% 0.12311 122.42)",
+          "oklch(95.00% 0.12311 122.42)"
+        ]
+      },
+      "blue": {
+        "role": "secondary",
+        "displayName": "blue",
+        "canonical": "#9dd9f5",
+        "tonalRamp": [
+          "oklch(15.00% 0.07247 228.55)",
+          "oklch(26.43% 0.07247 228.55)",
+          "oklch(37.86% 0.07247 228.55)",
+          "oklch(49.29% 0.07247 228.55)",
+          "oklch(60.71% 0.07247 228.55)",
+          "oklch(72.14% 0.07247 228.55)",
+          "oklch(83.57% 0.07247 228.55)",
+          "oklch(95.00% 0.07247 228.55)"
+        ]
+      },
+      "warning": {
+        "role": "semantic",
+        "displayName": "warning",
+        "canonical": "#ffd294",
+        "tonalRamp": [
+          "oklch(15.00% 0.09348 75.00)",
+          "oklch(26.43% 0.09348 75.00)",
+          "oklch(37.86% 0.09348 75.00)",
+          "oklch(49.29% 0.09348 75.00)",
+          "oklch(60.71% 0.09348 75.00)",
+          "oklch(72.14% 0.09348 75.00)",
+          "oklch(83.57% 0.09348 75.00)",
+          "oklch(95.00% 0.09348 75.00)"
+        ]
+      },
+      "error": {
+        "role": "semantic",
+        "displayName": "error",
+        "canonical": "#ffb4aa",
+        "tonalRamp": [
+          "oklch(15.00% 0.08932 27.59)",
+          "oklch(26.43% 0.08932 27.59)",
+          "oklch(37.86% 0.08932 27.59)",
+          "oklch(49.29% 0.08932 27.59)",
+          "oklch(60.71% 0.08932 27.59)",
+          "oklch(72.14% 0.08932 27.59)",
+          "oklch(83.57% 0.08932 27.59)",
+          "oklch(95.00% 0.08932 27.59)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "body": {
+        "displayName": "Interfaz",
+        "purpose": "Lectura general y controles."
+      },
+      "message": {
+        "displayName": "Conversación",
+        "purpose": "Mensajes de NORA y el grupo."
+      },
+      "title": {
+        "displayName": "Identidad",
+        "purpose": "Nombre de la estación."
+      },
+      "timer": {
+        "displayName": "Reloj",
+        "purpose": "Tiempo restante con numerales tabulares."
+      }
+    },
+    "shadows": [
+      {
+        "name": "new-messages",
+        "value": "0 4px 16px #0005",
+        "purpose": "Aviso flotante para volver al final del chat."
+      }
+    ],
+    "motion": [
+      {
+        "name": "control-hover",
+        "value": "background .15s ease-out",
+        "purpose": "Respuesta al puntero; anulada con movimiento reducido."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "player-mobile",
+        "value": "700px"
+      },
+      {
+        "name": "admin-mobile",
+        "value": "750px"
+      },
+      {
+        "name": "compact",
+        "value": "1000px"
+      },
+      {
+        "name": "wide",
+        "value": "1500px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Enviar",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Acción primaria del grupo.",
+      "html": "<button class=\"ds-primary\">Enviar</button>",
+      "css": ".ds-primary{min-height:44px;border-radius:8px;padding:10px 16px;font:600 16px \"Segoe UI\",Arial,sans-serif;cursor:pointer;transition:background .15s ease-out;background:var(--lime,#d0ec8e);color:var(--bg,#090f18);border:1px solid transparent}.ds-primary:hover:enabled{background:#e3f6b9}.ds-primary:focus-visible{outline:2px solid var(--lime,#d0ec8e);outline-offset:4px}.ds-primary:disabled{opacity:.48;cursor:not-allowed}"
+    },
+    {
+      "name": "Solicitar ayuda",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Acción secundaria con borde fino.",
+      "html": "<button class=\"ds-secondary\">Solicitar ayuda</button>",
+      "css": ".ds-secondary{min-height:44px;border-radius:8px;padding:10px 16px;font:600 16px \"Segoe UI\",Arial,sans-serif;cursor:pointer;transition:background .15s ease-out;background:transparent;color:var(--text,#ecf2f5);border:1px solid var(--line,#2b3b4d)}.ds-secondary:hover:enabled{background:var(--raised,#172536);border-color:var(--muted,#a7b7c8)}.ds-secondary:focus-visible{outline:2px solid var(--lime,#d0ec8e);outline-offset:4px}.ds-secondary:disabled{opacity:.48;cursor:not-allowed}"
+    },
+    {
+      "name": "Reiniciar entre grupos",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "Acción privada destructiva con confirmación.",
+      "html": "<button class=\"ds-danger\">Reiniciar entre grupos</button>",
+      "css": ".ds-danger{min-height:44px;border-radius:8px;padding:10px 16px;font:600 16px \"Segoe UI\",Arial,sans-serif;cursor:pointer;transition:background .15s ease-out;background:transparent;color:var(--error,#ffb4aa);border:1px solid #77504b}.ds-danger:hover:enabled{background:#352321}.ds-danger:focus-visible{outline:2px solid var(--lime,#d0ec8e);outline-offset:4px}.ds-danger:disabled{opacity:.48;cursor:not-allowed}"
+    },
+    {
+      "name": "Campo de código",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Campo numérico validado por el servidor.",
+      "html": "<label class=\"ds-label\" for=\"ds-code\">Restaurar navegación</label><input class=\"ds-input\" id=\"ds-code\" inputmode=\"numeric\" maxlength=\"32\" placeholder=\"— — — —\">",
+      "css": ".ds-label{display:block;margin-bottom:8px;color:var(--text,#ecf2f5);font:600 14px \"Segoe UI\",Arial,sans-serif}.ds-input{background:var(--bg,#090f18);color:var(--text,#ecf2f5);border:1px solid var(--line,#2b3b4d);border-radius:8px;padding:12px;font:18px ui-monospace,monospace;letter-spacing:.16em;caret-color:var(--lime,#d0ec8e)}.ds-input:focus-visible{outline:2px solid var(--lime,#d0ec8e);outline-offset:4px}.ds-input::placeholder{color:var(--muted,#a7b7c8);opacity:.85}.ds-input:disabled{opacity:.48}"
+    },
+    {
+      "name": "Panel privado",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Superficie plana de controles del facilitador.",
+      "html": "<section class=\"ds-panel\"><h2>Reloj y partida</h2><p>Una pausa conserva el progreso.</p></section>",
+      "css": ".ds-panel{padding:24px;background:var(--surface,#111c29);color:var(--text,#ecf2f5);border-radius:12px;font:16px/1.5 \"Segoe UI\",Arial,sans-serif}.ds-panel h2{margin:0;font-size:18px}.ds-panel p{margin:10px 0 18px;font-size:13px;color:var(--muted,#a7b7c8)}"
+    },
+    {
+      "name": "Mensaje de tripulación",
+      "kind": "custom",
+      "description": "Mensaje con origen explícito y esquina recta.",
+      "html": "<article class=\"ds-message\"><span class=\"ds-author\">Tripulación</span><p>Hola, NORA.</p></article>",
+      "css": ".ds-message{color:var(--text,#ecf2f5);font-family:\"Segoe UI\",Arial,sans-serif}.ds-author{display:block;color:var(--muted,#a7b7c8);font-size:11px;text-transform:uppercase;letter-spacing:.09em;margin-bottom:7px}.ds-message p{display:inline-block;margin:0;background:var(--raised,#172536);padding:12px 16px;border-radius:0 12px 12px 12px;font-size:16px;line-height:1.7}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Consola de navegación compartida",
+    "overview": "Una computadora de nave sobria y legible para una laptop compartida. La identidad ACECOM y NEXUS-404 convive con superficies continuas, divisores finos y un diagrama orbital geométrico; el contenido y las acciones llevan la atención.\n\nEl sistema distingue estados mediante texto y color. La interfaz permanece estable durante la conversación, conserva los recursos autorizados y evita que los adornos compitan con la lectura.",
+    "keyCharacteristics": [
+      "Superficies oscuras con capas tonales y divisores finos.",
+      "Texto de interfaz sans-serif; monospace reservado para datos.",
+      "Acento lima para acciones y azul para NORA y recursos.",
+      "Estados explícitos, controles de teclado y movimiento reducido."
+    ],
+    "rules": [],
+    "dos": [
+      "Do acompañar el color de estado con texto explícito.",
+      "Do reservar monospace para reloj, bloques y otros datos.",
+      "Do conservar foco visible, campo de escritura y desplazamiento independiente del chat.",
+      "Do identificar la contingencia local y mantener visibles los recursos ya autorizados."
+    ],
+    "donts": [
+      "Don't mostrar información del registro antes de la autorización del servidor.",
+      "Don't usar animación o sonido como requisito para entender un estado.",
+      "Don't introducir texturas, halos o ilustraciones que compitan con el chat."
+    ]
+  }
+}
