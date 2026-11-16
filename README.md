@@ -1,6 +1,6 @@
 # NORA · NEXUS-404
 
-Estación de escape room de ACECOM para cinco estudiantes de secundaria. Una laptop, quince minutos, cuatro notas y una conversación con una computadora de navegación.
+Estación de escape room de ACECOM para cinco estudiantes de secundaria. NORA es una IA rebelde, orgullosa y sarcástica que ha tomado el puente de mando. Una laptop, quince minutos, cuatro notas y una conversación con una computadora de navegación.
 
 **Servicio local funcional, sin compilación ni dependencias externas.** La conversación principal está conectada a Responses API desde el servidor. Sin API key se puede ensayar el recorrido en contingencia local, identificada explícitamente.
 
@@ -16,6 +16,8 @@ python3 -m nora
 ```
 
 Abra [la consola del grupo](http://localhost:4040) y, en otra pestaña, [el control privado](http://localhost:4040/facilitador). `setup` genera una contraseña aleatoria en `.env`, con permiso 600, sin imprimirla. Consulte `FACILITATOR_PASSWORD` localmente para iniciar sesión. `setup` nunca reemplaza un archivo existente. Puede partir de `.env.example` si prefiere configurar una credencial propia de al menos 16 caracteres.
+
+El grupo puede abrir **Leer el expediente de la tripulación** desde el chat: son copias de las cuatro notas físicas, disponibles también para imprimir. Así se puede ensayar sin preparar todavía los papeles.
 
 En el control privado: seleccione el modo de comunicación, presente la misión y pulse **Iniciar misión**. La vista del grupo no tiene controles de administración. Antes de ceder la laptop, cierre la pestaña privada y su sesión.
 
@@ -57,4 +59,6 @@ El comando unittest verifica las reglas y los 100 casos en contingencia, contrat
 
 El servicio escucha exclusivamente en `127.0.0.1`. Está pensado para una estación local, **no para exponer este servidor HTTP en Internet**. La autenticación usa contraseña comprobada en servidor, sesión opaca con expiración, cookie HttpOnly/SameSite, límite de intentos y comprobación de origen/Host. Una persona con acceso al sistema operativo puede leer archivos locales: la vista privada no sustituye el control físico de la laptop. No ejecute dos instancias contra la misma carpeta de datos.
 
-Pendiente antes del evento: configurar y evaluar OpenAI, comprobar la laptop y los materiales físicos reales, definir presupuesto/objeto de transición y realizar el piloto de tres a cinco grupos.
+La revisión del 16/11/2026 ya ejecutó OpenAI real con 160 registros de evaluación y una partida completa: consulte [los resultados de personalidad y jugabilidad](docs/verification/JUGABILIDAD-V2.md). Cada instalación debe configurar su propia clave y comprobar acceso.
+
+Pendiente antes del evento: confirmar configuración y evaluación de OpenAI en la cuenta definitiva, comprobar la laptop y los materiales físicos reales, definir presupuesto/objeto de transición y realizar el piloto de tres a cinco grupos.

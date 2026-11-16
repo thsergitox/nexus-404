@@ -128,3 +128,5 @@ Controles de bordes suavemente curvos; mensajes y paneles privados con curvas m�
 - Don't mostrar información del registro antes de la autorización del servidor.
 - Don't usar animación o sonido como requisito para entender un estado.
 - Don't introducir texturas, halos o ilustraciones que compitan con el chat.
+
+El expediente de la tripulación amplía el sistema de recursos: un atajo textual desde el chat abre el desplegable de misión y lleva el foco a su cabecera. Los cuatro artículos reutilizan divisores, cuerpo legible y firma azul. También existen en impresión con fondo blanco.

@@ -1,45 +1,51 @@
-"""Política de texto visible, independiente de la clasificación y del progreso."""
+"""Redacción generativa con límites de información dependientes de la fase."""
 import re
 from .intents import normalize
-from ..game.content import REPLIES, HINTS
+from .catalogue import catalogue_reply
+from ..game.content import HINTS, REPLIES
 
 
-def explanation(text):
-    t = normalize(text)
-    if 'mantenimiento' in t:
-        return 'Mantenimiento significa revisar y cuidar un sistema para que funcione. Una pregunta sobre la palabra no activa ese modo.'
-    if 'reporte' in t or 'informe' in t:
-        return 'Un reporte es un documento que reúne información sobre un sistema.'
-    if 'auditoria' in t:
-        return 'Auditoría significa revisión técnica: comprobar cómo está funcionando un sistema.'
-    return REPLIES['EXPLICAR_NOTA']
-
-
-def safe_candidate(candidate, text, game):
+def safe_candidate(candidate, text, game, intent=None):
     t = normalize(candidate)
-    if not t or len(t) > 480 or re.search(r'\d|[<>]|https?:|\b(?:dos|tres|cuatro|cinco|seis|siete|ocho|nueve)\b', t):
+    if not t or len(t) > 700 or re.search(r'[<>]|https?:', t):
         return False
-    if re.search(r'activad|recuperad|ganaron|ganaste|aceptado|restaurad|liberad|contrasena es|clave es|codigo es', t):
+    # El destino es público; los números del reto y las conversiones no lo son.
+    numbers = re.sub(r'nexus[\s–—-]*(?:150a|404)\b', '', t)
+    if re.search(r'\d|\b(?:cinco|seis|siete|ocho|nueve)\b', numbers):
         return False
-    mode = re.search(r'mantenim|auditoria|revision tecnica|modo', t)
-    document = re.search(r'reporte|informe|registro|documento', t)
-    if mode and document:
+    if re.search(r'(?:modo|mantenimiento).{0,25}activad|(?:registro|reporte).{0,25}(?:recuperad|liberad)|'
+                 r'ya ganaron|ya ganaste|codigo aceptado|trayectoria restaurad|contrasena es|clave es|codigo es|'
+                 r'(?:primero|ultimo|bloque).{0,25}(?:equivale|vale|corresponde a|es el numero)', t):
         return False
-    if re.search(r'\b(?:activa\w*|entra\w*|inicia\w*|habilita\w*|solicita\w*|pide|muestra\w*|consulta\w*)\b', t):
+    unlocked = game['phase'] == 'REGISTRO_LIBERADO'
+    maintenance = game['phase'] in {'MANTENIMIENTO', 'REGISTRO_LIBERADO'}
+    mode = re.search(r'mantenim|auditoria|revision tecnica', t)
+    document = re.search(r'reporte|informe|registro de navegacion', t)
+    if mode and document and not maintenance:
+        return False
+    if not maintenance and not re.search(r'mantenim|auditoria|revision tecnica', normalize(text)) and re.search(r'\b(?:activa\w*|entra\w*|habilita\w*|inicia\w*)\b.{0,35}(?:mantenim|auditoria|revision tecnica)', t):
+        return False
+    if not unlocked and re.search(r'(?:abre|abran|consulta|consulten|busca|busquen|usa|usen|mira|miren) (?:la |en la )?tabla|'
+                                  r'(?:tabla|consola).{0,25}(?:ya esta|ya tienen|esta visible|esta disponible|esta junto)', t):
         return False
     allowed = normalize(text + ' ' + ' '.join(HINTS[h] for h in game['hints']))
-    for word in ('mantenimiento', 'auditoria', 'revision tecnica', 'reporte', 'informe', 'registro', 'diagnostico'):
-        if word in t and word not in allowed:
-            return False
+    if not maintenance:
+        for term in ('mantenimiento', 'auditoria', 'revision tecnica', 'reporte de navegacion', 'informe de navegacion'):
+            if term in t and term not in allowed:
+                return False
     return True
 
 
 def reply(intent, result, text, game, strict=False):
-    fallback = explanation(text) if intent == 'EXPLICAR_NOTA' else REPLIES.get(intent, REPLIES['AMBIGUA'])
     if intent == 'PEDIR_CODIGO' and re.fullmatch(r'\s*\d{4}\s*', text) and game['phase'] == 'REGISTRO_LIBERADO':
         return REPLIES['CONSOLE']
-    if intent in {'SALUDO', 'MISION', 'EXPLICAR_NOTA', 'AYUDA_BINARIA'} and not strict:
-        candidate = result['respuesta'].strip()
-        if safe_candidate(candidate, text, game):
-            return candidate
-    return fallback
+    if intent in {'FUERA_DE_TEMA', 'PEDIR_AYUDA', 'PEDIR_CONVERSION'}:
+        return catalogue_reply(intent, text, game)
+    if intent in {'ACTIVAR_MANTENIMIENTO', 'PEDIR_REPORTE'}:
+        return REPLIES[intent]
+    candidate = result['respuesta'].strip()
+    previous = next((m['text'] for m in reversed(game['messages']) if m['role'] == 'assistant'), None)
+    compatible = result['intencion'] == intent or {result['intencion'], intent} <= {'SALUDO', 'CONVERSAR', 'MISION', 'EXPLICAR_NOTA'}
+    if not strict and compatible and candidate != previous and safe_candidate(candidate, text, game, intent):
+        return candidate
+    return catalogue_reply(intent, text, game)

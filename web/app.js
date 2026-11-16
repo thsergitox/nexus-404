@@ -1,11 +1,13 @@
 import { api, showError } from './api.js';
 import { noticeText, renderMessages, timeText } from './render.js';
 import { initializeTable, renderPanels } from './panels.js';
+import { initializeBriefing } from './briefing.js';
 const $ = selector => document.querySelector(selector);
 let game, busy = false, syncedAt = 0, connected = false, retryMessage;
 let requestSequence = 0, appliedSequence = 0;
 const memory = { id: null, count: 0 };
 initializeTable();
+initializeBriefing();
 function display(next) {
   if (game && game.id !== next.id) {
     $('#message').value = ''; $('#code').value = ''; $('#count').textContent = '0 / 800'; retryMessage = null;

@@ -5,6 +5,7 @@ from .intents import INTENTS, classify
 from .prompt import BASE, SCHEMA
 from .transport import post_json, TransportError
 from ..game.content import HINTS
+from ..game.briefing import NOTES
 
 
 class ProviderError(Exception):
@@ -29,7 +30,9 @@ def validate_output(result, hints):
 def payload(config, game, text):
     history = [dict(role=m['role'], content=m['text']) for m in game['messages']
                if m['role'] in {'user', 'assistant'}][-12:]
-    context = dict(estado=game['phase'], ayudas={h: HINTS[h] for h in game['hints']})
+    context = dict(estado=game['phase'], ayudas={h: HINTS[h] for h in game['hints']},
+                   expediente=NOTES, tabla_visible=game['phase'] == 'REGISTRO_LIBERADO',
+                   interfaz='Expediente de la tripulación en panel de misión; tabla y consola junto al registro recuperado.')
     return dict(model=config.model, store=False, max_output_tokens=600,
                 reasoning={'effort': 'none'}, instructions=BASE + '\nContexto del servidor: ' + json.dumps(context),
                 input=history + [dict(role='user', content=text)],

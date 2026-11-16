@@ -23,7 +23,7 @@ function harness(file) {
     document: { querySelector: query, querySelectorAll: () => [],
       createElement: element, body: element() },
     api: (path, data) => new Promise((resolve, reject) => requests.push({ path, data, resolve, reject })),
-    initializeTable() {}, renderMessages() {}, renderPanels() {},
+    initializeTable() {}, initializeBriefing() {}, renderMessages() {}, renderPanels() {},
     noticeText: () => '', timeText: String,
     showError: (node, message = '') => { node.textContent = message; node.hidden = !message; },
     performance: { now: () => 0 },

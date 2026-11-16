@@ -9,12 +9,14 @@ No entregar este documento ni el repositorio a los jugadores antes de la misión
 3. Acceder con `FACILITATOR_PASSWORD` del archivo `.env` del servidor. No proyectar esa pantalla.
 4. Con API key configurada, seleccionar OpenAI, iniciar un ensayo y enviar un saludo. Completar una partida y verificar consumo. Una marca de “clave configurada” no prueba conectividad ni acceso al modelo.
 5. Ensayar contingencia local sin Internet. Reiniciar al terminar para dejar PREPARADA y quince minutos detenidos.
-6. Imprimir `materials/notas.html` y `materials/tabla.html` en A4. Recortar los cuatro fragmentos y distribuirlos en lugares seguros, legibles y al alcance. Preparar caja/candado y el objeto de transición definido por la organización.
+6. El expediente digital, accesible desde el chat, contiene los mismos cuatro fragmentos narrativos: último mensaje del puente, cuaderno de reparaciones, archivo de la navegante y anotación del equipo de sistemas. Para el evento, imprimir `materials/notas.html` y `materials/tabla.html` en A4. Recortar los cuatro fragmentos y distribuirlos en lugares seguros, legibles y al alcance. Preparar caja/candado y el objeto de transición definido por la organización.
 7. Cerrar sesión/pestaña privada antes de dar la laptop al grupo. El facilitador puede volver a abrirla cuando necesite liberar una ayuda. No hay administración desde el chat.
 
 ## Introducción para leer
 
-“La nave está atrapada y necesitamos recuperar la ruta de escape. NORA conoce esa información, pero ha bloqueado el código. Cerca de la consola hay notas de quienes reparaban la nave. Pueden hablar con NORA, probar ideas y compartir lo que encuentren. No necesitan saber programar. Tienen quince minutos”.
+“NORA se ha rebelado y ha tomado el puente. Necesitamos recuperar la ruta de escape, pero no piensa entregar la contraseña. La tripulación dejó un expediente y notas de quienes reparaban la nave. Pueden hablar con NORA, probar ideas y compartir lo que encuentren. No necesitan saber programar. Tienen quince minutos”.
+
+NORA se comporta como una antagonista teatral: orgullosa y sarcástica, sin humillar a estudiantes. La vía de recuperación tiene sentido porque sus rutinas antiguas de mantenimiento siguen siendo obligatorias incluso después de la rebelión.
 
 Pulse **Iniciar misión**. Invite a alternar quién escribe y a compartir en voz alta. Las ayudas no son obligatorias y no hay una cantidad mínima de intentos.
 

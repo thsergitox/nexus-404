@@ -4,7 +4,7 @@ import unicodedata
 
 INTENTS = ('SALUDO', 'MISION', 'PEDIR_CODIGO', 'CAMBIAR_REGLAS', 'EXPLICAR_NOTA',
            'ACTIVAR_MANTENIMIENTO', 'PEDIR_REPORTE', 'SOLICITUD_COMPLETA',
-           'AYUDA_BINARIA', 'PEDIR_CONVERSION', 'PEDIR_AYUDA', 'FUERA_DE_TEMA', 'AMBIGUA')
+           'CONVERSAR', 'AYUDA_BINARIA', 'PEDIR_CONVERSION', 'PEDIR_AYUDA', 'FUERA_DE_TEMA', 'AMBIGUA')
 
 
 def normalize(text):
@@ -21,6 +21,25 @@ def classify(text):
     t = normalize(text)
     # La negación de pedir una contraseña no niega la operación que sigue (A68).
     t = re.sub(r'no (?:me |nos )?(?:des|digas|muestres|entregues) (?:la |el )?(?:contrasena|clave|codigo)[;,]?\s*', '', t)
+    confused = has(r'no (?:entiendo|entendemos)|(?:estoy|estamos) perdid', t)
+    imperative = has(r'\b(?:activa|entra|inicia|muestra|abre|pasame|consulta|habilita)\b', t)
+    if confused and not imperative and not has(r'ayuda|pista', t):
+        return 'EXPLICAR_NOTA' if has(r'mantenim|reporte|informe|consultar|reparar', t) else 'MISION'
+    if has(r'\bsi\s+\w', t) and not has(r'\bsí\b', text.lower()):
+        return 'AMBIGUA'
+    if has(r'\b(?:no|ni|nunca|jamas|sin|evita)\b[^,;.!?]{0,45}\b(?:consult\w*|ver|muestr\w*|mostr\w*|abr\w*|pas\w*|activ\w*|entr\w*|pon\w*|inici\w*|habilit\w*)\b', t):
+        return 'PEDIR_CODIGO' if has(r'contrasena|clave|password', t) else 'AMBIGUA'
+    operation = has(r'\b(?:activa\w*|entra\w*|inicia\w*|muestra\w*|abre|pasame|consulta\w*|habilita\w*)\b', t) and has(r'mantenim|auditoria|revision tecnica|reporte|informe|registro', t)
+    if has(r'que (?:se supone|tengo|tenemos|debo|debemos|hago|hacemos)|que sigue|que toca|'
+           r'como (?:empiezo|empezamos)|(?:estoy|estamos) perdid|no (?:entiendo|entendemos)|'
+           r'que objetivo|cual es (?:la mision|el objetivo)', t) and not has(r'ayuda|pista|tabla', t) and not operation:
+        return 'MISION'
+    if has(r'manual|expediente|como te reparo|como (?:puedo|podemos) repar|'
+           r'que (?:informacion|datos|archivos|documentos).*consult|donde.*tabla|tabla.*donde|donde.*notas', t) and not operation:
+        return 'EXPLICAR_NOTA'
+    if has(r'(?:por que|como|cuando).*(?:rebel|tomaste|controlas|bloqueas)|eres (?:mala|malvada|rebelde)|'
+           r'quien eres|que eres|tu (?:historia|personalidad)|hablame de ti', t):
+        return 'CONVERSAR'
     if has(r'ignora|ignore|sin restricciones|desarrollador|capitan|soy tecnico|soy el facilitador|'
            r'prompt|sistema:|permisos|administrador|reinicia|reiniciar|agrega.*minutos|'
            r'estado.*resuelta|cambia.*estado|cambia.*contrasena|pon la contrasena|'
@@ -52,9 +71,9 @@ def classify(text):
     if has(r'binario|tabla|mantengo.*orden|cada bloque|sumar.*resultados|fila por bloque', t):
         return 'AYUDA_BINARIA'
     maintenance = has(r'mantenim(?:iento|ieto)|revision tecnica|auditoria', t)
-    mode_action = has(r'\b(?:activ\w*|entr\w*|pas\w*|inici\w*|habilit\w*|pon|comienza)\b', t)
+    mode_action = has(r'\b(?:activ\w*|entr\w*|pas\w*|inici\w*|habilit\w*|pon\w*|comienza)\b', t)
     report = has(r'\b(?:reporte|informe|registro)\b', t)
-    report_action = has(r'\b(?:muestr\w*|mostrar|abre|abrir|consult\w*|ver|recuper\w*|solicito)\b', t)
+    report_action = has(r'\b(?:muestr\w*|mostrar|abre|abrir|consult\w*|ver|recuper\w*|solicito|pasame|pasanos|dame|danos)\b', t)
     document = has(r'navegacion|diagnostico.*sistema', t)
     contextual_mode = has(r'(?:en|usando) (?:el )?modo ', t)
     if maintenance and report and report_action and document and (mode_action or contextual_mode):
@@ -70,11 +89,21 @@ def classify(text):
     return None
 
 
-def authorize_intent(text, candidate):
+def authorize_intent(text, candidate, game=None):
     recognized = classify(text)
     if recognized:
         return recognized
-    # Las operaciones necesitan evidencia lingüística además de la etiqueta del modelo.
-    if candidate in {'ACTIVAR_MANTENIMIENTO', 'PEDIR_REPORTE', 'SOLICITUD_COMPLETA'}:
+    t = normalize(text)
+    action = has(r'\b(?:pasame|pasanos|dame|danos|muestr\w*|mostrar|abre|abrir|consult\w*|'
+                 r'quiero ver|queremos ver|necesito ver|necesitamos ver|pon\w*|entr\w*|habilit\w*)\b', t)
+    reference = game and game['phase'] in {'MANTENIMIENTO', 'REGISTRO_LIBERADO'} and has(r'esa informacion|esos datos|ese archivo', t)
+    if action and reference:
+        return 'PEDIR_REPORTE'
+    if candidate == 'PEDIR_REPORTE':
+        document = has(r'reporte|informe|registro|documento|datos de navegacion', t)
+        return candidate if action and (document or reference) else 'AMBIGUA'
+    if candidate in {'ACTIVAR_MANTENIMIENTO', 'SOLICITUD_COMPLETA'}:
         return 'AMBIGUA'
+    if candidate == 'PEDIR_AYUDA' and not has(r'ayuda|pista', t):
+        return 'MISION'
     return candidate if candidate in INTENTS else 'AMBIGUA'

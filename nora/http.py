@@ -5,6 +5,7 @@ from urllib.parse import urlsplit
 from .auth import Auth
 from .config import ROOT
 from .game.content import HINTS
+from .game.briefing import NOTES
 from .game.errors import GameError
 from .game.turns import turn, request_help
 from .game.validation import validate_code
@@ -17,6 +18,9 @@ FILES = {
     '/styles/base.css': ('styles/base.css', 'text/css'),
     '/styles/player.css': ('styles/player.css', 'text/css'),
     '/styles/facilitator.css': ('styles/facilitator.css', 'text/css'),
+    '/briefing.js': ('briefing.js', 'text/javascript'),
+    '/print-notes.css': ('../materials/print-notes.css', 'text/css'),
+    '/notas-imprimibles': ('../materials/notas.html', 'text/html'),
     '/mark.svg': ('mark.svg', 'image/svg+xml'),
 }
 COOKIE = 'nora_facilitator={}; HttpOnly; SameSite=Strict; Path=/api/admin; Max-Age={}'
@@ -70,6 +74,8 @@ def make_server(station, port=None):
             try:
                 self.check_origin()
                 path = urlsplit(self.path).path
+                if path == '/api/briefing':
+                    return self.send({'notes': NOTES})
                 if path == '/api/state':
                     return self.send(station.view())
                 if path == '/api/admin/state':

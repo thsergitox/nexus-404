@@ -105,7 +105,7 @@ def turn(station, game_id, message_id, text):
             pause(game, station.clock())
             game['messages'].append(dict(role='system', text=REPLIES['ERROR'], id=message_id + '-error'))
         else:
-            intent = authorize_intent(text, result['intencion'])
+            intent = authorize_intent(text, result['intencion'], snapshot)
             event = commit_intent(game, intent)
             response = REPLIES['LIBERAR'] if event == 'LIBERAR' else reply(intent, result, text, game, station.config.strict)
             game['messages'].append(dict(role='system' if event == 'LIBERAR' else 'assistant',
