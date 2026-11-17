@@ -1,47 +1,91 @@
 <!doctype html>
 <html lang="es">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090f18"><title>NORA · NEXUS-404</title><link rel="icon" href="/mark.svg"><link rel="stylesheet" href="/styles/base.css"><link rel="stylesheet" href="/styles/player.css"><script type="module" src="/app.js"></script></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#03060c"><title>NORA · NEXUS-404</title><link rel="icon" href="/mark.svg">
+<link rel="preload" href="/fonts/chakra-petch-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/styles/base.css"><link rel="stylesheet" href="/styles/player.css"><link rel="stylesheet" href="/styles/hud.css"><link rel="stylesheet" href="/styles/chat.css"><link rel="stylesheet" href="/styles/sidebar.css"><link rel="stylesheet" href="/styles/notes.css"><link rel="stylesheet" href="/styles/effects.css"><link rel="stylesheet" href="/styles/launch.css">
+<script type="module" src="/boot.js"></script><script type="module" src="/space.js"></script><script type="module" src="/app.js"></script></head>
 <body>
+<canvas id="space" class="space" aria-hidden="true"></canvas>
+<div class="atmosphere" aria-hidden="true"></div>
+<div id="boot" class="boot" aria-hidden="true">
+  <div class="boot-core">
+    <div class="mascot mascot-boot"><img src="/acecom.png" alt="" width="320" height="453"><div class="mascot-screen"><span class="boot-title">NEXUS-404</span><span class="boot-bar"><i></i></span></div></div>
+    <ol class="boot-log">
+      <li>Enlace ACECOM establecido</li>
+      <li>Cargando núcleo NORA</li>
+      <li>Sincronizando reloj de la estación</li>
+      <li class="boot-warn">Alerta: el puente no responde</li>
+    </ol>
+    <p class="boot-skip">Pulsen cualquier tecla para entrar al puente</p>
+  </div>
+</div>
 <a class="skip" href="#message">Ir al campo de conversación</a>
 <div class="station-shell">
-<header class="masthead">
-  <div class="identity"><img src="/mark.svg" width="42" height="42" alt=""><div><span class="brand">ACECOM</span><h1>NEXUS<span class="muted">–</span>404</h1></div></div>
+<header class="masthead hud-frame">
+  <div class="identity">
+    <div class="mascot mascot-badge" aria-hidden="true"><img src="/acecom.png" alt="" width="320" height="453"><div class="mascot-screen"><span class="badge-eyes">404</span></div></div>
+    <div><span class="brand">ACECOM <span class="brand-sub"><i aria-hidden="true">//</i> Estación orbital</span></span><h1><span class="glitch" data-text="NEXUS-404">NEXUS-404</span></h1></div>
+  </div>
+  <div class="telemetry" aria-hidden="true">
+    <div class="readout"><span>Casco</span><b class="meter"><i></i></b></div>
+    <div class="readout"><span>Soporte vital</span><b class="meter meter-b"><i></i></b></div>
+    <div class="readout"><span>Motor de salto</span><b class="meter meter-c"><i></i></b></div>
+  </div>
   <div class="connection"><span class="status-light"></span><span id="connection-label">Conectando con la estación</span></div>
-  <div class="timer"><span>Tiempo de la estación</span><strong id="clock" role="timer" aria-label="Tiempo restante">15:00</strong></div>
+  <div class="timer">
+    <svg class="timer-ring" viewBox="0 0 64 64" aria-hidden="true"><circle class="ring-track" cx="32" cy="32" r="28"/><circle class="ring-fill" cx="32" cy="32" r="28" pathLength="100"/></svg>
+    <div class="timer-text"><span>Tiempo de la estación</span><strong id="clock" role="timer" aria-label="Tiempo restante">15:00</strong></div>
+  </div>
 </header>
 <div id="notice" class="notice" role="status" hidden></div>
 <main class="workspace">
-  <section class="chat-pane" aria-label="Conversación con NORA">
-    <div class="pane-heading"><div class="nora-avatar" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="13"/><path d="M9 20h22M20 7v26M12 12l16 16M28 12L12 28"/></svg></div><div><h2>NORA</h2><p>IA de navegación · al mando</p></div><span id="chat-state" class="small-label">En espera</span></div>
-    <div class="chat-tools"><button id="briefing-shortcut" class="text-button" type="button">Leer el expediente de la tripulación</button></div>
+  <section class="chat-pane hud-frame" aria-label="Conversación con NORA">
+    <div class="pane-heading">
+      <div class="nora-core" aria-hidden="true"><div class="core-gimbal"><span class="orbit-a"></span><span class="orbit-b"></span><span class="orbit-c"></span></div><span class="core-heart"></span></div>
+      <div><h2>NORA</h2><p>IA de navegación <span aria-hidden="true">·</span> al mando del puente</p></div>
+      <div class="channel-state"><span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span id="chat-state" class="small-label">En espera</span></div>
+    </div>
+    <div class="chat-tools"><button id="briefing-shortcut" class="text-button" type="button">Leer el expediente de la tripulación</button><span class="small-label freq" aria-hidden="true">Frecuencia 404.7 MHz</span></div>
     <div id="messages" class="messages" role="log" aria-label="Mensajes" aria-live="polite" aria-relevant="additions"></div>
-    <button id="new-messages" class="new-messages" hidden>Ver mensajes nuevos</button>
-    <div id="thinking" class="thinking" role="status" hidden><span></span>NORA está respondiendo…</div>
+    <button id="new-messages" class="new-messages" hidden>Ver transmisiones nuevas</button>
+    <div id="thinking" class="thinking" role="status" hidden><span class="scope" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>NORA está transmitiendo…</div>
     <form id="chat-form" class="composer">
       <label for="message" class="sr-only">Mensaje para NORA</label>
-      <div class="input-row"><textarea id="message" rows="2" maxlength="800" placeholder="Escriban su solicitud a NORA…" aria-describedby="composer-help" disabled></textarea><button id="send" class="primary" type="submit" disabled>Enviar <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M10 4l6 6-6 6"/></svg></button></div>
-      <div class="composer-meta"><span id="composer-help">Enter para enviar · Shift + Enter para una nueva línea</span><span id="count">0 / 800</span></div>
+      <div class="input-row"><span class="prompt" aria-hidden="true">&gt;_</span><textarea id="message" rows="2" maxlength="800" placeholder="Escriban su transmisión a NORA…" aria-describedby="composer-help" disabled></textarea><button id="send" class="primary" type="submit" disabled>Transmitir <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M10 4l6 6-6 6"/></svg></button></div>
+      <div class="composer-meta"><span id="composer-help">Enter para transmitir · Shift + Enter para una nueva línea</span><span id="count">0 / 800</span></div>
       <p id="chat-error" class="error-text" role="alert" hidden></p>
     </form>
   </section>
-  <aside class="sidebar" aria-label="Misión y recursos">
-    <section class="mission"><div class="section-heading"><h2>La misión</h2><span class="small-label">Nexus 150A</span></div>
-      <svg class="orbit" viewBox="0 0 300 110" role="img" aria-label="Ruta de navegación bloqueada"><ellipse cx="147" cy="56" rx="117" ry="32"/><ellipse cx="147" cy="56" rx="75" ry="21"/><path class="route" d="M33 74Q126 12 265 41"/><circle class="ship" cx="54" cy="63" r="5"/><circle class="destination" cx="263" cy="41" r="7"/><path class="cross" d="M142 43l14 14m0-14l-14 14"/></svg>
-      <h3>Recuperen la ruta de escape.</h3><p>NORA se ha quedado con el puente. Recuperen el registro de navegación y reconstruyan el código de salto.</p><div class="physical-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 12h7M9 16h5"/></svg><span>La tripulación dejó cuatro fragmentos. Léanlos en equipo y decidan qué pedirle a NORA.</span></div>
-      <details id="crew-file"><summary>Abrir expediente de la tripulación</summary>
+  <aside class="sidebar hud-frame" aria-label="Misión y recursos">
+    <section class="mission module"><div class="section-heading"><h2>La misión</h2><span class="small-label">Nexus 150A</span></div>
+      <svg class="orbit" viewBox="0 0 300 110" role="img" aria-label="Ruta de navegación bloqueada"><ellipse class="orbit-line" cx="147" cy="56" rx="117" ry="32"/><ellipse class="orbit-line inner" cx="147" cy="56" rx="75" ry="21"/><circle class="planet-dot" cx="147" cy="56" r="9"/><path class="route" d="M33 74Q126 12 265 41"/><circle class="ship-halo" cx="54" cy="63" r="10"/><circle class="ship" cx="54" cy="63" r="4"/><circle class="destination" cx="263" cy="41" r="7"/><circle class="destination-pulse" cx="263" cy="41" r="7"/><path class="cross" d="M142 43l14 14m0-14l-14 14"/></svg>
+      <h3>Recuperen la ruta de escape.</h3><p>NORA se ha quedado con el puente. Recuperen el registro de navegación y reconstruyan el código de salto.</p>
+      <details id="crew-file" class="crew-file"><summary class="file-card"><span class="file-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 12h7M9 16h5"/></svg></span><span class="file-text"><strong>Expediente de la tripulación</strong><span>Cuatro fragmentos. Ábranlo primero y léanlos en equipo.</span></span><span class="file-cue" aria-hidden="true"></span></summary>
         <p class="small muted">Copias de las notas físicas. Cada persona puede leer un fragmento y compartir lo que descubre.</p>
         <div id="crew-notes" class="crew-notes"></div>
         <a class="print-notes" href="/notas-imprimibles" target="_blank" rel="noopener">Abrir notas para imprimir</a>
       </details>
     </section>
-    <section class="hint-panel"><div class="section-heading"><h2>Ayudas recibidas</h2><span id="hint-count" class="small-label">0</span></div><div id="hints"><p class="muted">Ninguna todavía. Pueden avanzar con sus propias ideas.</p></div><button id="help" class="secondary full" disabled>Solicitar ayuda</button><p id="help-status" class="muted small" role="status"></p></section>
-    <section class="record-panel"><div class="section-heading"><h2>Registro de navegación</h2><svg class="lock-icon" id="lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div><div id="locked-record"><p class="muted">Acceso restringido.</p><div class="sealed" aria-hidden="true"><span></span><span></span><span></span><span></span></div></div><div id="unlocked-record" hidden>
-      <p class="small muted">Registro recuperado</p><div id="binary-blocks" class="binary-blocks" aria-label="Cuatro bloques del registro"></div><p class="small">Cuatro bloques. Cuatro dígitos. El orden importa.</p>
+    <section class="hint-panel module"><div class="section-heading"><h2>Ayudas recibidas</h2><span id="hint-count" class="small-label count-chip">0</span></div><div id="hints"><p class="muted">Ninguna todavía. Pueden avanzar con sus propias ideas.</p></div><button id="help" class="secondary full" disabled>Solicitar ayuda</button><p id="help-status" class="muted small" role="status"></p></section>
+    <section class="record-panel module"><div class="section-heading"><h2>Registro de navegación</h2><svg class="lock-icon" id="lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div><div id="locked-record"><div class="vault" aria-hidden="true"><span class="vault-scan"></span><span class="vault-stamp">Acceso restringido</span></div><p class="muted">Solo NORA puede liberar este registro.</p><div class="sealed" aria-hidden="true"><span></span><span></span><span></span><span></span></div></div><div id="unlocked-record" hidden>
+      <p class="small unlocked-label">Registro recuperado</p><div id="binary-blocks" class="binary-blocks" aria-label="Cuatro bloques del registro"></div><p class="small">Cuatro bloques. Cuatro dígitos. El orden importa.</p>
       <form id="code-form" class="code-form"><label for="code">Restaurar navegación</label><div class="input-row"><input id="code" type="text" inputmode="numeric" maxlength="32" autocomplete="off" placeholder="— — — —" aria-describedby="code-help"><button class="primary" type="submit">Validar</button></div><p id="code-help" class="small muted">Introduzcan el código de cuatro dígitos.</p><p id="code-error" class="error-text" role="alert" hidden></p></form>
+      <form id="crew-name-form" class="crew-name-form" hidden><label for="crew-name">Registren a su tripulación en el ranking</label><div class="input-row"><input id="crew-name" type="text" maxlength="24" autocomplete="off" placeholder="Ej.: Los Halcones"><button class="primary" type="submit">Registrar</button></div><p id="crew-name-error" class="error-text" role="alert" hidden></p></form>
+      <p id="crew-name-done" class="crew-name-done" hidden>Tripulación registrada. <a href="/ranking" target="_blank" rel="noopener">Ver mejores tiempos</a></p>
       <details id="binary-table"><summary>Consultar tabla binaria</summary><p class="small muted">Cada bloque representa un dígito.</p><table><caption class="sr-only">Equivalencias completas de cero a nueve</caption><thead><tr><th scope="col">Decimal</th><th scope="col">Binario</th></tr></thead><tbody id="table-rows"></tbody></table><button id="close-table" class="text-button" type="button">Cerrar tabla</button></details>
     </div></section>
   </aside>
 </main>
 <footer class="station-footer"><span><span class="tiny-dot"></span> Estación ACECOM</span><p>No escriban datos personales. La conversación conectada utiliza OpenAI.</p><span id="mode-label">Enlace de navegación</span></footer>
 </div>
+<dialog id="note-dialog" class="note-dialog" aria-labelledby="note-dialog-title">
+  <article class="note-sheet hud-frame">
+    <p id="note-dialog-label" class="note-sheet-label"></p>
+    <h3 id="note-dialog-title"></h3>
+    <p id="note-dialog-text" class="note-sheet-text"></p>
+    <p id="note-dialog-author" class="note-sheet-author"></p>
+    <button class="note-close" type="button" aria-label="Cerrar nota"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
+  </article>
+</dialog>
+<div class="scanlines" aria-hidden="true"></div>
 </body></html>

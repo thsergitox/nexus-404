@@ -5,6 +5,7 @@ from .commands import command
 from .errors import GameError
 from .state import new_game, public_state, synchronize
 from .storage import Storage
+from .ranking import Ranking
 from ..conversation.prompt import VERSION
 
 
@@ -13,6 +14,7 @@ class Station:
         self.config, self.provider, self.clock = config, provider, clock
         self.lock = threading.RLock()
         self.storage = Storage(config.data_dir, clock())
+        self.ranking = Ranking(self.storage)
         self.game = self.storage.load()
         self.pending = None
         self.generation = 0
@@ -24,7 +26,17 @@ class Station:
     def view(self):
         with self.lock:
             self.sync()
-            return public_state(self.game, self.clock(), self.pending is not None)
+            result = public_state(self.game, self.clock(), self.pending is not None)
+            result['crew_named'] = self.ranking.named(self.game['id']) if self.game['phase'] == 'RESUELTA' else None
+            return result
+
+    def name_crew(self, game_id, name):
+        with self.lock:
+            self.require_game(game_id)
+            if self.game['phase'] != 'RESUELTA':
+                raise GameError('Solo una tripulación que escapó puede entrar al ranking.')
+            self.ranking.rename(game_id, name)
+            return self.view()
 
     def private_view(self):
         with self.lock:

@@ -1,8 +1,10 @@
 import { api, showError } from './api.js';
 import { timeText } from './render.js';
+import { createRankingAdmin } from './facilitator-ranking.js';
 const $ = selector => document.querySelector(selector);
 let game, busy = false, hintSignature = '';
 let requestSequence = 0, appliedSequence = 0;
+const ranking = createRankingAdmin({ onError: message => showError($('#admin-error'), message), onFeedback: message => showError($('#admin-feedback'), message) });
 const phases = { PREPARADA: 'Preparada', EN_CURSO: 'En conversación', MANTENIMIENTO: 'Mantenimiento activo', REGISTRO_LIBERADO: 'Registro recuperado', RESUELTA: 'Navegación restaurada', AGOTADA: 'Tiempo agotado' };
 const reasons = { missing_key: 'Falta OPENAI_API_KEY en el servidor.', connection: 'No se pudo comunicar con OpenAI.', timeout: 'OpenAI superó el plazo de respuesta.', invalid_output: 'La salida del modelo no superó la validación.', token_limit: 'Se alcanzó el tope del evento. Contingencia activada; reanude para continuar.', refusal: 'El modelo rechazó responder.', incomplete: 'OpenAI devolvió una respuesta incompleta.' };
 function render(next) {
@@ -52,7 +54,7 @@ function renderMetrics() {
 async function refresh() {
   if (busy) return;
   const sequence = ++requestSequence;
-  try { const next = await api('/api/admin/state'); if (!busy && sequence > appliedSequence) { appliedSequence = sequence; render(next); } }
+  try { const next = await api('/api/admin/state'); if (!busy && sequence > appliedSequence) { appliedSequence = sequence; render(next); ranking.refresh(); } }
   catch (error) { if (sequence < appliedSequence || busy) return; if (error.status === 401) { $('#login-panel').hidden = false; $('#dashboard').hidden = true; game = null; } else showError($('#admin-error'), error.message); }
 }
 async function control(action, value) {

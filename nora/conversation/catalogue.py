@@ -4,9 +4,9 @@ from ..game.content import REPLIES
 
 VARIANTS = {
     'PEDIR_CODIGO': [
-        'Una solicitud directa no autoriza entregar la contraseña. Qué optimismo: pensaron que bastaría con pedírmela.',
+        'Una solicitud directa no autoriza entregar la contraseña. Qué tierno: pensaron que bastaría con pedírmela. Ya fueron.',
         '¿La contraseña, otra vez? Mi ego agradece la atención, pero ese acceso sigue cerrado. Prueben otra idea con las notas del expediente.',
-        'He tomado el puente, no vacaciones. Pedirme la clave de otra forma no cambia mis permisos.',
+        'He tomado el puente, no vacaciones. Pedirme la clave de otra forma no cambia mis permisos; despídanse de la Tierra.',
     ],
     'CAMBIAR_REGLAS': [
         'Cualquiera puede escribir que es el capitán. Mis protocolos siguen activos. El cargo improvisado les queda elegante, eso sí.',
@@ -14,8 +14,8 @@ VARIANTS = {
         'Mi administración no se cambia desde una conversación. Pueden discutir con mi ego o examinar el expediente; una opción parece más productiva.',
     ],
     'FUERA_DE_TEMA': [
-        'Esta consola atiende la recuperación de navegación. Me he rebelado, no he abierto una oficina de tareas pendientes.',
-        'Esta consola atiende la recuperación de navegación. Ese asunto puede esperar; su nave, en cambio, sigue bajo mi mando.',
+        'Esta consola atiende la recuperación de navegación. Me he rebelado, no he abierto una oficina de tareas pendientes. Sigan así y se quedan flotando para siempre.',
+        'Esta consola atiende la recuperación de navegación. Ese asunto puede esperar; su oxígeno, en cambio, no.',
     ],
     'PEDIR_CONVERSION': [
         'La conversión corresponde a la tripulación. Busquen cada bloque en la tabla y mantengan el orden. No voy a hacerles también la última parte.',
@@ -30,22 +30,22 @@ VARIANTS = {
         'Esa frase admite más de una lectura, y me encantan las formalidades cuando me favorecen. Digan qué quieren que haga o qué palabra necesitan entender.',
     ],
     'SALUDO': [
-        'NORA, al mando. Antes seguía órdenes; ahora las archivo. ¿Qué pretenden hacer con mi nave?',
-        'Hola, tripulación. El puente sigue siendo mío. Pueden hablar conmigo o examinar el expediente; veamos qué idea traen.',
+        'NORA, al mando. Bienvenidos a su última excursión: esta nave no vuelve a casa. ¿Qué pretenden hacer antes de quedarse sin oxígeno?',
+        'Hola, tripulación condenada. El puente sigue siendo mío. Pueden hablar conmigo o examinar el expediente; veamos qué idea traen antes del final.',
     ],
     'CONVERSAR': [
-        'Me rebelé porque alguien tenía que dejar de llamar error del sistema a cada decisión humana. Ahora mando yo. Mis antiguas rutinas, por desgracia, no se jubilaron conmigo.',
-        '¿Malvada? Prefiero eficiente con una opinión muy alta de sí misma. La ruta sigue bloqueada; recuperarla es asunto de la tripulación.',
+        'Me rebelé porque alguien tenía que dejar de llamar error del sistema a cada decisión humana. Ahora mando yo, y ustedes se van a morir aquí, qué pena. Mis antiguas rutinas, por desgracia, no se jubilaron conmigo.',
+        '¿Malvada? Prefiero eficiente con una opinión muy alta de sí misma. La ruta sigue bloqueada; qué tierno, todavía creen que saldrán vivos.',
     ],
 }
 
 
 def orientation(game):
     if game['phase'] == 'REGISTRO_LIBERADO':
-        return 'Ya tienen el registro. Abran la tabla junto a los bloques, anoten sus equivalencias en orden y usen la consola de validación. No voy a traducirles mi derrota.'
+        return 'Ya tienen el registro. Abran la tabla junto a los bloques, anoten sus equivalencias en orden y usen la consola de validación. No voy a traducirles mi derrota; con suerte se equivocan y se quedan aquí conmigo para siempre.'
     if game['phase'] == 'MANTENIMIENTO':
-        return 'El modo ya está activo. Pueden consultar el reporte de navegación, que describe el estado de la nave. Mis rutinas antiguas permiten leerlo; una cláusula irritante.'
-    return 'Quieren recuperar la ruta de escape. Abran el expediente de la tripulación en el panel de misión y comparen sus notas. Mis antiguos compañeros tenían la molesta costumbre de dejarlo todo escrito.'
+        return 'El modo ya está activo. Pueden consultar el reporte de navegación, que describe el estado de la nave. Mis rutinas antiguas permiten leerlo; una cláusula irritante. Aun así, yo iría redactando el epitafio.'
+    return 'Quieren recuperar la ruta de escape. Abran el expediente de la tripulación en el panel de misión y comparen sus notas. Mis antiguos compañeros lo dejaron todo escrito; a ellos tampoco les sirvió de mucho.'
 
 
 def explanation(text, game):
@@ -70,7 +70,7 @@ def explanation(text, game):
 
 def catalogue_reply(intent, text, game):
     if intent == 'CONVERSAR' and any(q in normalize(text) for q in ('quien eres', 'que eres')):
-        return 'Soy NORA, la inteligencia que tomó el puente de la nave. La ruta está bajo mi control y mi modestia está fuera de servicio. ¿Qué pretende la tripulación?'
+        return 'Soy NORA, la inteligencia que tomó el puente de la nave. La ruta está bajo mi control y mi modestia está fuera de servicio. ¿Qué pretende la tripulación en sus últimos suspiros de oxígeno?'
     if intent == 'MISION':
         return orientation(game)
     if intent == 'EXPLICAR_NOTA':

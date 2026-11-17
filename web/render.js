@@ -1,33 +1,71 @@
-const roles = { user: 'Tripulación', assistant: 'NORA', system: 'Sistema de navegación' };
-export function blockElements(blocks, className = 'chat-card') {
-  const container = document.createElement('div'); container.className = className;
-  blocks.forEach(block => { const code = document.createElement('code'); code.textContent = block; container.append(code); });
-  return container;
+import { createMessage, prepareForTransmission } from './message-view.js';
+import { transmit } from './transmission.js';
+
+const STICK_DISTANCE = 140;
+const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+const distanceToBottom = container => container.scrollHeight - container.scrollTop - container.clientHeight;
+const scrollToBottom = container => { container.scrollTop = container.scrollHeight; };
+
+export function showPendingMessage(container, memory, text) {
+  discardPendingMessage(memory);
+  const element = createMessage({ role: 'user', text });
+  element.classList.add('pending');
+  container.append(element); scrollToBottom(container);
+  memory.pending = { element, text: text.trim() };
 }
-export function createMessage(message, blocks) {
-  const article = document.createElement('article'); article.className = `message ${message.role}`;
-  const avatar = document.createElement('div'); avatar.className = 'message-avatar'; avatar.textContent = message.role === 'user' ? 'T' : 'N'; avatar.setAttribute('aria-hidden', 'true');
-  const body = document.createElement('div'); body.className = 'message-body';
-  const author = document.createElement('span'); author.className = 'message-author'; author.textContent = roles[message.role];
-  const text = document.createElement('p'); text.textContent = message.text;
-  body.append(author, text);
-  if (message.card && blocks) body.append(blockElements(blocks));
-  article.append(avatar, body); return article;
+
+export function discardPendingMessage(memory) {
+  memory.pending?.element.remove();
+  memory.pending = null;
 }
+
+function adoptsPending(memory, message) {
+  return memory.pending && message.role === 'user' && message.text === memory.pending.text;
+}
+
+function queueTransmission(container, article, text, memory, newButton) {
+  const { visible, card } = prepareForTransmission(article, text);
+  article.classList.add('queued');
+  const follow = () => {
+    if (distanceToBottom(container) < STICK_DISTANCE) scrollToBottom(container);
+    else newButton.hidden = false;
+  };
+  memory.queue = (memory.queue || Promise.resolve()).then(() => {
+    article.classList.replace('queued', 'streaming');
+    return transmit(visible, text, { onFrame: follow, reduced: reducedMotion() });
+  }).then(() => {
+    article.classList.remove('streaming'); article.classList.add('received');
+    if (card) { card.hidden = false; follow(); }
+  });
+}
+
 export function renderMessages(container, game, memory, newButton) {
-  const nearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 70;
+  const nearBottom = distanceToBottom(container) < 70;
   const fresh = memory.id !== game.id;
-  if (fresh) { container.replaceChildren(); memory.id = game.id; memory.count = 0; }
+  if (fresh) {
+    container.replaceChildren();
+    Object.assign(memory, { id: game.id, count: 0, pending: null, queue: null });
+  }
   const added = game.messages.slice(memory.count);
-  added.forEach(message => container.append(createMessage(message, game.blocks)));
+  added.forEach(message => {
+    if (adoptsPending(memory, message)) {
+      memory.pending.element.classList.remove('pending'); memory.pending = null; return;
+    }
+    const article = createMessage(message, game.blocks);
+    container.insertBefore(article, memory.pending?.element ?? null);
+    if (!fresh && message.role === 'assistant') queueTransmission(container, article, message.text, memory, newButton);
+    else if (!fresh) article.classList.add('arrived');
+  });
   memory.count = game.messages.length;
-  if (fresh || nearBottom) container.scrollTop = container.scrollHeight;
+  if (fresh || nearBottom) scrollToBottom(container);
   else if (added.length) newButton.hidden = false;
 }
+
 export function timeText(seconds) {
   const safe = Math.max(0, Math.ceil(seconds));
   return `${String(Math.floor(safe / 60)).padStart(2, '0')}:${String(safe % 60).padStart(2, '0')}`;
 }
+
 export function noticeText(game) {
   if (game.phase === 'RESUELTA') return 'Trayectoria restaurada. Avisen al facilitador para recibir el siguiente elemento de la misión.';
   if (game.phase === 'AGOTADA') return 'Tiempo de esta estación agotado. El progreso se conserva. Avisen al facilitador.';

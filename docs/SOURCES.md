@@ -14,3 +14,5 @@ Consulta: 13 de noviembre de 2026. No hay dependencias de terceros en ejecución
 Requisitos de producto: especificación NEXUS-404_Especificacion_MVP.md v1.0 del organizador y su propuesta PDF original. El plan preliminar sustituido no se usó como fuente de requisitos.
 
 Revisión del 16/11/2026: [OpenAI Prompt Personalities](https://developers.openai.com/cookbook/examples/gpt-5/prompt_personalities) y [Prompt Engineering](https://developers.openai.com/api/docs/guides/prompt-engineering). Se adaptaron identidad, motivación, voz y ejemplos de interacción al personaje original NORA; no se copió un prompt de un personaje ajeno.
+
+Interfaz (17/11/2026): fuentes [Chakra Petch](https://fonts.google.com/specimen/Chakra+Petch) y [JetBrains Mono](https://fonts.google.com/specimen/JetBrains+Mono), ambas con licencia SIL Open Font License, incluidas en `web/fonts/`. Referencias visuales de interfaces de ficción: [HUDs & GUIs — The Expanse](https://www.hudsandguis.com/home/2021/theexpanse) y [Sci-Fi Interfaces — Prometheus](https://scifiinterfaces.com/category/prometheus-2012/page/3).

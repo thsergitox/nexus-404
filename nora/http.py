@@ -19,10 +19,44 @@ FILES = {
     '/styles/player.css': ('styles/player.css', 'text/css'),
     '/styles/facilitator.css': ('styles/facilitator.css', 'text/css'),
     '/briefing.js': ('briefing.js', 'text/javascript'),
+    '/note-card.js': ('note-card.js', 'text/javascript'),
+    '/note-viewer.js': ('note-viewer.js', 'text/javascript'),
     '/print-notes.css': ('../materials/print-notes.css', 'text/css'),
     '/notas-imprimibles': ('../materials/notas.html', 'text/html'),
+    '/ranking': ('ranking.html', 'text/html'),
+    '/ranking.js': ('ranking.js', 'text/javascript'),
+    '/ranking-format.js': ('ranking-format.js', 'text/javascript'),
+    '/facilitator-ranking.js': ('facilitator-ranking.js', 'text/javascript'),
+    '/crew-name.js': ('crew-name.js', 'text/javascript'),
+    '/styles/ranking.css': ('styles/ranking.css', 'text/css'),
     '/mark.svg': ('mark.svg', 'image/svg+xml'),
+    '/acecom.png': ('acecom.png', 'image/png'),
+    '/boot.js': ('boot.js', 'text/javascript'),
+    '/space.js': ('space.js', 'text/javascript'),
+    '/space/starfield.js': ('space/starfield.js', 'text/javascript'),
+    '/space/planet.js': ('space/planet.js', 'text/javascript'),
+    '/transmission.js': ('transmission.js', 'text/javascript'),
+    '/message-view.js': ('message-view.js', 'text/javascript'),
+    '/styles/hud.css': ('styles/hud.css', 'text/css'),
+    '/styles/chat.css': ('styles/chat.css', 'text/css'),
+    '/styles/sidebar.css': ('styles/sidebar.css', 'text/css'),
+    '/styles/effects.css': ('styles/effects.css', 'text/css'),
+    '/styles/notes.css': ('styles/notes.css', 'text/css'),
+    '/styles/launch.css': ('styles/launch.css', 'text/css'),
+    '/launch.js': ('launch.js', 'text/javascript'),
+    '/launch/ship-model.js': ('launch/ship-model.js', 'text/javascript'),
+    '/launch/ship-renderer.js': ('launch/ship-renderer.js', 'text/javascript'),
+    '/launch/trajectory.js': ('launch/trajectory.js', 'text/javascript'),
+    '/launch/trail.js': ('launch/trail.js', 'text/javascript'),
+    '/fonts/chakra-petch-400.woff2': ('fonts/chakra-petch-400.woff2', 'font/woff2'),
+    '/fonts/chakra-petch-600.woff2': ('fonts/chakra-petch-600.woff2', 'font/woff2'),
+    '/fonts/chakra-petch-700.woff2': ('fonts/chakra-petch-700.woff2', 'font/woff2'),
+    '/fonts/jetbrains-mono.woff2': ('fonts/jetbrains-mono.woff2', 'font/woff2'),
 }
+def public_entry(entry):
+    return {key: value for key, value in entry.items() if key != 'id'}
+
+
 COOKIE = 'nora_facilitator={}; HttpOnly; SameSite=Strict; Path=/api/admin; Max-Age={}'
 
 
@@ -78,6 +112,11 @@ def make_server(station, port=None):
                     return self.send({'notes': NOTES})
                 if path == '/api/state':
                     return self.send(station.view())
+                if path == '/api/ranking':
+                    return self.send({'entries': [public_entry(e) for e in station.ranking.top()]})
+                if path == '/api/admin/ranking':
+                    self.server.auth.require(self.headers.get('Cookie'))
+                    return self.send({'entries': station.ranking.entries()})
                 if path == '/api/admin/state':
                     self.server.auth.require(self.headers.get('Cookie'))
                     return self.send(dict(**station.private_view(), hint_catalog=HINTS))
@@ -107,6 +146,16 @@ def make_server(station, port=None):
                         return self.send({'ok': True}, cookie=COOKIE.format('', 0))
                     if path == '/api/admin/control':
                         return self.send(station.control(data.get('game_id'), data.get('action'), data.get('value')))
+                    if path == '/api/admin/ranking/delete':
+                        station.ranking.delete(data.get('ids'))
+                        return self.send({'entries': station.ranking.entries()})
+                    if path == '/api/admin/ranking/clear':
+                        if data.get('confirm') is not True:
+                            raise GameError('Confirmen el borrado completo del ranking.', 400)
+                        station.ranking.clear()
+                        return self.send({'entries': station.ranking.entries()})
+                if path == '/api/ranking/name':
+                    return self.send(station.name_crew(data.get('game_id'), data.get('name')))
                 if path == '/api/chat':
                     return self.send(turn(station, data.get('game_id'), data.get('message_id'), data.get('text')))
                 if path == '/api/help':

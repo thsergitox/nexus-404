@@ -1,4 +1,4 @@
-import { blockElements } from './render.js';
+import { blockElements } from './message-view.js';
 let hintKey = '', recordKey = '';
 export function renderPanels(game, busy) {
   const key = game.id + game.hints.map(h => h.id).join();

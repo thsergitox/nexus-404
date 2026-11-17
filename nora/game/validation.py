@@ -24,4 +24,6 @@ def validate_code(station, game_id, code):
         game['revision'] += 1
         station.generation += 1
         station.storage.save(game)
+        now = station.clock()
+        station.ranking.record(game['id'], round(now - (game['started'] or now)), len(game['hints']), game['assisted'], now)
         return station.view()

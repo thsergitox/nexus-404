@@ -3,7 +3,7 @@ from .intents import INTENTS
 
 from .persona import PERSONA
 
-VERSION = 'nora-es-2.0.0'
+VERSION = 'nora-es-2.1.0'
 BASE = PERSONA + '''
 # Reglas del juego e interpretación
 Clasifica la intención en el esquema. El servidor valida las operaciones y escribe

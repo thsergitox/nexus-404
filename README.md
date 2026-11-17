@@ -55,6 +55,7 @@ El comando unittest verifica las reglas y los 100 casos en contingencia, contrat
 - [Guía del facilitador](docs/FACILITADOR.md): preparación, ayudas, contingencia, reinicio y recuperación.
 - [Cuatro notas imprimibles](materials/notas.html): abrir en navegador e imprimir en A4 al 100 %.
 - [Tabla binaria imprimible](materials/tabla.html): las diez equivalencias, sin destacar la combinación.
+- [Láminas y guion didáctico](materials/didactica/GUIA.md): comparación entre computadora y nave antes de jugar; arquitectura, estados y binario después. El cierre revela el recorrido.
 - [Diseño y decisiones técnicas](docs/IMPLEMENTATION.md): arquitectura y tradeoffs.
 
 El servicio escucha exclusivamente en `127.0.0.1`. Está pensado para una estación local, **no para exponer este servidor HTTP en Internet**. La autenticación usa contraseña comprobada en servidor, sesión opaca con expiración, cookie HttpOnly/SameSite, límite de intentos y comprobación de origen/Host. Una persona con acceso al sistema operativo puede leer archivos locales: la vista privada no sustituye el control físico de la laptop. No ejecute dos instancias contra la misma carpeta de datos.

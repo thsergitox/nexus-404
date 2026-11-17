@@ -5,7 +5,7 @@ import vm from 'node:vm';
 
 function element() {
   return { value: '', hidden: false, disabled: false, textContent: '',
-    classList: { toggle() {} }, addEventListener() {}, replaceChildren() {},
+    classList: { toggle() {}, add() {}, remove() {} }, style: { setProperty() {} }, addEventListener() {}, replaceChildren() {},
     append() {}, focus() {} };
 }
 
@@ -23,7 +23,7 @@ function harness(file) {
     document: { querySelector: query, querySelectorAll: () => [],
       createElement: element, body: element() },
     api: (path, data) => new Promise((resolve, reject) => requests.push({ path, data, resolve, reject })),
-    initializeTable() {}, initializeBriefing() {}, renderMessages() {}, renderPanels() {},
+    initializeTable() {}, initializeBriefing() {}, launchShip() {}, initializeCrewName() {}, renderCrewName() {}, createRankingAdmin: () => ({ refresh() {} }), renderMessages() {}, renderPanels() {},
     noticeText: () => '', timeText: String,
     showError: (node, message = '') => { node.textContent = message; node.hidden = !message; },
     performance: { now: () => 0 },

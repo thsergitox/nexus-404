@@ -14,9 +14,11 @@ No entregar este documento ni el repositorio a los jugadores antes de la misión
 
 ## Introducción para leer
 
+Para una presentación didáctica de dos minutos y un cierre de tres, usar la [guía con dos láminas](../materials/didactica/GUIA.md). Proyectar solo **Antes de jugar** al inicio; **Después de jugar** revela el recorrido y se reserva para el cierre. La introducción siguiente sigue disponible como versión breve.
+
 “NORA se ha rebelado y ha tomado el puente. Necesitamos recuperar la ruta de escape, pero no piensa entregar la contraseña. La tripulación dejó un expediente y notas de quienes reparaban la nave. Pueden hablar con NORA, probar ideas y compartir lo que encuentren. No necesitan saber programar. Tienen quince minutos”.
 
-NORA se comporta como una antagonista teatral: orgullosa y sarcástica, sin humillar a estudiantes. La vía de recuperación tiene sentido porque sus rutinas antiguas de mantenimiento siguen siendo obligatorias incluso después de la rebelión.
+NORA se comporta como una antagonista teatral: orgullosa, burlona y fatalista ("ya fueron", "se van a morir aquí, qué pena"). Ese humor negro se limita al destino ficticio de la tripulación: nunca se burla de la inteligencia, el aspecto o la escritura de los estudiantes. Conviene avisarlo al presentar la misión. La vía de recuperación tiene sentido porque sus rutinas antiguas de mantenimiento siguen siendo obligatorias incluso después de la rebelión.
 
 Pulse **Iniciar misión**. Invite a alternar quién escribe y a compartir en voz alta. Las ayudas no son obligatorias y no hay una cantidad mínima de intentos.
 
@@ -57,6 +59,10 @@ Si el navegador pierde contacto con el servidor local, comprobar que sigue corri
 Pulse **Reiniciar entre grupos** y confirme. Se crea otro identificador y se borran conversación, ayudas y bloques del grupo anterior. Respuestas tardías del anterior se descartan. Quedan métricas sin texto: duración de pared desde inicio, turnos, ayudas, resultado, asistencia, errores y uso medido.
 
 Recolocar las cuatro notas, tabla, caja y objeto de transición. Comprobar quince minutos y estado PREPARADA. Objetivo físico: dos a tres minutos.
+
+## Ranking de mejores tiempos
+
+Al descifrar el código, el servidor guarda el tiempo transcurrido desde **Iniciar misión** y el grupo escribe el nombre de su tripulación (una sola vez, hasta veinticuatro caracteres). Las pausas cuentan dentro del tiempo. Proyecte `http://localhost:4040/ranking` en otra pantalla: muestra el top diez y se actualiza solo. En el control privado, la sección **Ranking de tiempos** permite marcar y eliminar entradas (pruebas, nombres inapropiados) o borrar todo con confirmación. Reiniciar entre grupos no borra el ranking.
 
 ## Recuperar después de cierre o corrupción
 
